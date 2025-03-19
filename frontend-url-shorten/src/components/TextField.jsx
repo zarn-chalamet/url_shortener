@@ -32,7 +32,7 @@ const TextField = ({label,value,onChange,placeholder,isPassword}) => {
             type="button"
             onClick={toggleShowPassword}
             aria-label={isShowPassword ? "Hide password" : "Show password"}
-            className="absolute inset-y-0 right-3 flex items-center justify-center text-gray-500 mt-1 mr-2"
+            className="absolute inset-y-0 right-3 flex items-center justify-center text-gray-500 mt-5 mr-2"
         >
         {isShowPassword ? <FaRegEye size={22} /> : <FaRegEyeSlash size={22} />}
         </button>

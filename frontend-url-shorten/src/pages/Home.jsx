@@ -6,11 +6,12 @@ const Home = () => {
     <div className="py-8 px-4 sm:px-8 md:px-16">
 
       {/* Hero Section */}
-      <div className="flex flex-col-reverse md:flex-row items-center mb-16 space-y-8 md:space-y-0">
+      <div className="flex flex-col-reverse md:flex-row items-center mb-10 space-y-8 md:space-y-0">
         <div className="text-center md:text-left md:w-1/2">
-          <h1 className="text-3xl sm:text-4xl font-bold text-gray-800 mb-4">
+          <h1 className="text-4xl lg:text-7xl font-bold text-gray-800 mb-4">
             Linklytics Simplifies URL Shortening For Efficient Sharing
           </h1>
+
           <p className="text-lg sm:text-xl text-gray-600 mb-6 max-w-2xl mx-auto md:mx-0">
             Linklytics streamlines the process of URL shortening, making sharing links effortless and efficient. With its user-friendly interface, Linklytics allows you to generate concise, easy-to-share URLs in seconds. Simplify your sharing experience with Linklytics today.
           </p>

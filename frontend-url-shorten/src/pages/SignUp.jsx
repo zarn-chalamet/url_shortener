@@ -1,23 +1,36 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import TextField from '../components/TextField';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
+import {AppContext} from "../context-api/AppContext"
+import axios from "axios";
 
 const SignUp = () => {
 
   const navigate = useNavigate();
+  const {backendUrl} = useContext(AppContext)
+
+  const [loader, setLoader] = useState(false);
 
   const [username,setUsername] = useState("");
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const signUpHandler = () => {
+  const signUpHandler = async () => {
+    setLoader(true);
     try {
-      console.log(username);
-      console.log(email);
-      console.log(password);
+      const {data} = await axios.post(backendUrl+"/api/auth/public/register",{
+        username,email,password 
+      })
+      toast.success(data)
+      setUsername("");
+      setEmail("");
+      setPassword("");
+      navigate("/login");
     } catch (error) {
       toast.error(error);
+    } finally {
+      setLoader(false);
     }
   }
 
@@ -56,10 +69,11 @@ const SignUp = () => {
 
       {/* Sign Up Button */}
       <button 
+        disabled={loader}
         className="w-full py-3 bg-black text-white rounded-full hover:bg-gray-800 transition duration-300 font-medium text-lg"
         onClick={signUpHandler}
       >
-        Sign Up
+        {loader ? "Loading..." : "Sign Up"}
       </button>
 
       {/* Optional - Already have an account */}
