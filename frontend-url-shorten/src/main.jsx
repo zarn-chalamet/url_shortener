@@ -6,12 +6,15 @@ import './index.css'
 import router from "./router";
 import { Toaster } from 'react-hot-toast';
 import { AppContextProvider } from "./context-api/AppContext";
+import { UrlContextProvider } from "./context-api/UrlContext";
 
 createRoot(document.getElementById('root')).render(
   <>
     <AppContextProvider>
-      <Toaster />
-      <RouterProvider router={router} />
+      <UrlContextProvider>
+        <Toaster />
+        <RouterProvider router={router} />
+      </UrlContextProvider>
     </AppContextProvider>
   </>
 )

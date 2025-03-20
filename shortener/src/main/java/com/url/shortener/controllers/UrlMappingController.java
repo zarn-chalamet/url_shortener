@@ -60,18 +60,34 @@ public class UrlMappingController {
         return ResponseEntity.ok(clickEventDTOS);
     }
 
+//    @GetMapping("/totalClicks")
+//    @PreAuthorize("hasRole('USER')")
+//    public ResponseEntity<Map<LocalDate,Long>> getTotalClicksByDate(Principal principal,
+//                                                               @RequestParam("startDate") String startDate,
+//                                                               @RequestParam("endDate") String endDate){
+//        User user = userService.findByUsername(principal.getName());
+//
+//        DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE;
+//        LocalDate start = LocalDate.parse(startDate,formatter);
+//        LocalDate end = LocalDate.parse(endDate,formatter);
+//
+//        Map<LocalDate,Long> totalClicks = urlMappingService.getTotalClicksByUserAndDate(user,start,end);
+//
+//        return ResponseEntity.ok(totalClicks);
+//    }
+
     @GetMapping("/totalClicks")
     @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<Map<LocalDate,Long>> getTotalClicksByDate(Principal principal,
-                                                               @RequestParam("startDate") String startDate,
-                                                               @RequestParam("endDate") String endDate){
+    public ResponseEntity<Map<LocalDate, Long>> getTotalClicksByDate(
+            Principal principal) {
+
         User user = userService.findByUsername(principal.getName());
 
         DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE;
-        LocalDate start = LocalDate.parse(startDate,formatter);
-        LocalDate end = LocalDate.parse(endDate,formatter);
+        LocalDate end = LocalDate.now();
+        LocalDate start = end.minusDays(30);
 
-        Map<LocalDate,Long> totalClicks = urlMappingService.getTotalClicksByUserAndDate(user,start,end);
+        Map<LocalDate, Long> totalClicks = urlMappingService.getTotalClicksByUserAndDate(user, start, end);
 
         return ResponseEntity.ok(totalClicks);
     }

@@ -1,9 +1,16 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
+import { AppContext } from '../context-api/AppContext';
 
 const Navbar = () => {
 
   const navigate = useNavigate();
+  const {isLoggedIn,handleLogout} = useContext(AppContext);
+
+  const onLogOut = () => {
+    handleLogout();
+    navigate("/");
+  }
 
   return (
     <nav className="flex items-center justify-between px-16 py-6 bg-white shadow-md w-full sticky top-0">
@@ -36,11 +43,35 @@ const Navbar = () => {
           About
         </NavLink>
 
-        <NavLink to="/sign-up">
-          <button className="px-8 py-3 bg-black text-white rounded-full hover:bg-gray-800 transition duration-300">
+        {
+          isLoggedIn
+          &&
+          <NavLink 
+            to="/dashboard" 
+            className={({ isActive }) => 
+              isActive 
+                ? "text-black border-b-2 border-black pb-1" 
+                : "hover:text-black hover:border-b-2 hover:border-black pb-1 transition"
+            }
+          >
+            Dashboard
+          </NavLink>
+        }
+
+        {
+          !isLoggedIn 
+          ?
+      
+          <button onClick={()=>navigate("/sign-up")} className="px-8 py-3 bg-black text-white rounded-full hover:bg-gray-800 transition duration-300">
             Sign Up
           </button>
-        </NavLink>
+
+          :
+          
+          <button onClick={onLogOut} className="px-8 py-3 bg-red-700 text-white rounded-full hover:bg-gray-800 transition duration-300">
+            Log out
+          </button>
+        }
       </div>
     </nav>
   );
