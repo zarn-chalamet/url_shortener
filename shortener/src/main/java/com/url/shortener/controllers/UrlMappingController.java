@@ -46,14 +46,26 @@ public class UrlMappingController {
         return ResponseEntity.ok(urls);
     }
 
+//    @GetMapping("/analytics/{shortUrl}")
+//    @PreAuthorize("hasRole('USER')")
+//    public ResponseEntity<List<ClickEventDTO>> getUrlAnalytics(@PathVariable String shortUrl,
+//                                                               @RequestParam("startDate") String startDate,
+//                                                               @RequestParam("endDate") String endDate){
+//        DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
+//        LocalDateTime start = LocalDateTime.parse(startDate,formatter);
+//        LocalDateTime end = LocalDateTime.parse(endDate,formatter);
+//
+//        List<ClickEventDTO> clickEventDTOS = urlMappingService.getClickEventsByDate(shortUrl,start,end);
+//
+//        return ResponseEntity.ok(clickEventDTOS);
+//    }
+
     @GetMapping("/analytics/{shortUrl}")
     @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<List<ClickEventDTO>> getUrlAnalytics(@PathVariable String shortUrl,
-                                                               @RequestParam("startDate") String startDate,
-                                                               @RequestParam("endDate") String endDate){
-        DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
-        LocalDateTime start = LocalDateTime.parse(startDate,formatter);
-        LocalDateTime end = LocalDateTime.parse(endDate,formatter);
+    public ResponseEntity<List<ClickEventDTO>> getUrlAnalytics(@PathVariable String shortUrl){
+
+        LocalDateTime end = LocalDateTime.now();
+        LocalDateTime start = end.minusDays(30);
 
         List<ClickEventDTO> clickEventDTOS = urlMappingService.getClickEventsByDate(shortUrl,start,end);
 
@@ -83,7 +95,6 @@ public class UrlMappingController {
 
         User user = userService.findByUsername(principal.getName());
 
-        DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE;
         LocalDate end = LocalDate.now();
         LocalDate start = end.minusDays(30);
 

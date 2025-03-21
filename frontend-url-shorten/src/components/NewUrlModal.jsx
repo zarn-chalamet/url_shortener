@@ -23,10 +23,16 @@ const NewUrlModal = ({ modalIsOpen, setModalIsOpen }) => {
               },
         }
       )
-      console.log(data);
+
+      // copied the shorten url link to the clipboard
+      const shortenUrl =  `${import.meta.env.VITE_BACKEND_URL}/${data.shortUrl}`;
+      navigator.clipboard.writeText(shortenUrl).then(()=>{
+        toast.success("Short URL copied to Clipboard");
+      })
+      
       getMyShortUrls(token);
-      setModalIsOpen(false);
-      toast.success("URL shortened successfully!");
+      setOriginalUrl("");
+      setModalIsOpen(false);  
     } catch (error) {
       toast.error("Failed to shorten URL"+error);
     }

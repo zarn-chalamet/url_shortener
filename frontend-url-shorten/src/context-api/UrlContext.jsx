@@ -11,6 +11,7 @@ export const UrlContextProvider = ({children}) => {
 
     const [myShortUrls,setMyShortUrls] = useState([]);
     const [totalClicks,setTotalClicks] = useState([]);
+    const [analyticsData, setAnalyticsData] = useState([]);
     
     const getMyShortUrls = async (token) => {
         try {
@@ -52,10 +53,28 @@ export const UrlContextProvider = ({children}) => {
         
     }
 
+    const getAnaylitcsDataByShortUrl = async (shortUrl,token) => {
+        try {
+            const {data} = await axios.get(backendUrl+"/api/urls/analytics/" +shortUrl,{
+                headers: {
+                    "Content-Type": "application/json",
+                    Accept: "application/json",
+                    Authorization: "Bearer "+token,
+                }
+            });
+
+            setAnalyticsData(data);
+            console.log(data);
+        } catch (error) {
+            toast.error(error);
+        }
+    }
+
     const value = {
         backendUrl, 
         myShortUrls,getMyShortUrls,
         totalClicks,getTotalClicks,
+        analyticsData, getAnaylitcsDataByShortUrl
     }
 
     return (
