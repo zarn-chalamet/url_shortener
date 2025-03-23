@@ -5,8 +5,10 @@ import { UrlContext } from '../context-api/UrlContext'
 import { AppContext } from '../context-api/AppContext'
 import NewUrlModal from '../components/NewUrlModal'
 import { FiCopy, FiCalendar, FiBarChart2 } from 'react-icons/fi';
+import { FaExternalLinkAlt } from 'react-icons/fa';
 import { MdAnalytics} from 'react-icons/md';
 import toast from 'react-hot-toast';
+import { Link } from 'react-router-dom';
 
 const Dashboard = () => {
   const {backendUrl,token} = useContext(AppContext);
@@ -33,6 +35,7 @@ const Dashboard = () => {
     }
   },[token])
 
+
   const copyToClipboard = (text) => {
     navigator.clipboard.writeText(text)
       .then(() => {
@@ -42,6 +45,15 @@ const Dashboard = () => {
         console.error('Failed to copy: ', err);
       });
   };
+
+  // const handleShortUrlClick = (shortUrl) => {
+  //   totalClicks[0].count++;
+  //   // Optional: small delay to let state update if needed
+  //   setTimeout(() => {
+  //     window.open(`${backendUrl}/${shortUrl}`, '_blank');
+  //   }, 300); 
+  // };
+  
 
   return (
     <div className="lg:w-[90%] w-full mx-auto py-16">
@@ -79,7 +91,7 @@ const Dashboard = () => {
             {/* Left Side */}
             <div className="flex justify-between items-center">
               <div>
-                <a
+                {/* <a
                   href={`${backendUrl}/${url.shortUrl}`}
                   target="_blank"
                   rel="noopener noreferrer"
@@ -90,7 +102,24 @@ const Dashboard = () => {
                   className="text-[17px] font-montserrat font-[600] text-linkColor hover:underline"
                 >
                   {url.shortUrl}
-                </a>
+                </a> */}
+
+                {/* <span
+                  onClick={() => handleShortUrlClick(url.shortUrl)}
+                  className="cursor-pointer text-[17px] font-montserrat font-[600] text-linkColor hover:underline"
+                >
+                  {url.shortUrl}
+                </span> */}
+
+              <Link
+                target='_'
+                className='text-[17px]  font-montserrat font-[600] text-linkColor'
+                to={`${backendUrl}/${url.shortUrl}`}>
+                    {url.shortUrl}
+              </Link>
+              <FaExternalLinkAlt className="text-linkColor" />
+                
+
 
                 <h4 className="text-gray-700 mt-1">{url.originalUrl}</h4>
 
